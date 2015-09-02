@@ -66,6 +66,7 @@ describe ('syslog-serialize', function () {
   });
   
   it ('serialize without host', function () {
+    var os = require('os');
     var log = serialize({
       time: time,
       process: 'system',
@@ -73,7 +74,7 @@ describe ('syslog-serialize', function () {
       message: 'test'
     });
     
-    log.should.equal('<5>Feb 07 01:02:03 system[142]: test');
+    log.should.equal(format('<5>Feb 07 01:02:03 %s system[142]: test', os.hostname()));
   });
 });
 

@@ -3,6 +3,7 @@
  */
 
 var format = require('util').format;
+var os = require('os');
 
 /**
  * Expose serialize
@@ -26,10 +27,11 @@ module.exports = function serialize (log) {
   message.push(format('%s %s %s:%s:%s', month, date, hours, minutes, seconds));
   
   // host optional
-  log.host && message.push(log.host);
+  var host = log.host || os.hostname();
+  message.push(host);
   
   // process and pid
-  message.push(format('%s[%s]:', log.process, log.pid));
+  message.push(format('%s[%s]:', log.process, log.pid || process.pid));
   
   // message
   message.push(log.message);
